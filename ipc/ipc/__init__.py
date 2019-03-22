@@ -1,3 +1,3 @@
-from client import Client
-from server import Server
-from rate import Rate
+from ipc.client import Client
+from ipc.server import Server
+from ipc.rate import Rate
