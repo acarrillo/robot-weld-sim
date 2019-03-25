@@ -1,8 +1,10 @@
 """Sensor process main entrypoint"""
 
+import logging
 from sensor import Sensor
 
 def main():
+    logging.basicConfig()
     sensor = Sensor()
 
     while True:

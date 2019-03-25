@@ -1,7 +1,7 @@
 """Robot base"""
 
-import json
 import random
+import logging
 
 from common.constants import (
     WELDER_PORT,
@@ -14,13 +14,15 @@ from ipc import (
     Server
 )
 
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 class Welder(object):
     """Welder model"""
 
     def __init__(self):
         self.server = Server(WELDER_PORT, 'welder')
-        self.controller = Client(CONTROLLER_PORT, 'controller')
+        self.controller = Client(CONTROLLER_PORT, 'controller', 1)
 
         self.x = 0
         self.y = 0
@@ -30,6 +32,11 @@ class Welder(object):
 
         # Grab the latest move command
         move_cmd = self.controller.recv()
+        if not move_cmd:
+            move_cmd = {
+                'delta_x': 0,
+                'delta_y': 0
+            }
 
         # Apply it
         self.drive(move_cmd)
@@ -39,6 +46,10 @@ class Welder(object):
 
     def drive(self, move_cmd):
         """Takes a drive command and applies it"""
+        logger.info("Received dx dy commands: %s, %s",
+                    move_cmd['delta_x'],
+                    move_cmd['delta_y']
+                   )
         delta_x = move_cmd['delta_x']
         delta_y = move_cmd['delta_y'] + (random.random() * MAX_Y_ERROR)
 

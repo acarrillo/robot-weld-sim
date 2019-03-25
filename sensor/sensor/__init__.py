@@ -21,7 +21,7 @@ class Sensor(object):
 
     def __init__(self):
         self.server = Server(SENSOR_PORT, 'sensor')
-        self.welder = Client(WELDER_PORT, 'welder')
+        self.welder = Client(WELDER_PORT, 'welder', 1)
 
     def dispatch(self):
         """Execute a single cycle of the sensor process"""
@@ -31,6 +31,8 @@ class Sensor(object):
         # behavior, it needs to be based on the truth of the
         # welder's actual position.
         welder_msg = self.welder.recv()
+        if not welder_msg:
+            return None
         self.publish({
             'x': welder_msg['x'],
             'y': welder_msg['y']

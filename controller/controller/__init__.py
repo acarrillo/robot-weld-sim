@@ -15,7 +15,7 @@ from common.constants import (
 )
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logger.INFO)
+logger.setLevel(logging.INFO)
 
 
 class Controller(object):
@@ -23,14 +23,17 @@ class Controller(object):
 
     def __init__(self):
         self.server = Server(CONTROLLER_PORT, 'controller')
-        self.sensor = Client(SENSOR_PORT, 'sensor')
+        self.sensor = Client(SENSOR_PORT, 'sensor', 1)
         self.rate = Rate(1)  # Hz
 
     def dispatch(self):
         """Runs a single cycle of the controller process"""
 
         sensor_msg = self.sensor.recv()
-        reported_y = sensor_msg['estimated_position']['y']
+        if not sensor_msg:
+            return None
+        logger.info("Received sensor position: %s", sensor_msg)
+        reported_y = sensor_msg['y']
 
         # The y axis is deliberately driven to zero,
         # so any reported y axis position is the error.

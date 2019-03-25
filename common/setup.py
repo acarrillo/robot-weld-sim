@@ -5,14 +5,11 @@ def get_reqs():
         reqs = fobj.readlines()
     return [req.strip() for req in reqs]
 
-setup(name='sensor',
+setup(name='common',
       version='1.0',
-      description='Robot Weld Sim Sensor Model',
+      description='Robot Weld Sim Common Library',
       author='Alejandro Carrillo',
       author_email='alex.emilio.carrillo@gmail.com',
-      packages=['sensor'],
-      install_requires=get_reqs(),
-      entry_points = {
-          'console_scripts': ['run-sensor=sensor.__main__:main']
-      }
+      packages=['common'],
+      install_requires=get_reqs()
      )

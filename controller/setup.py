@@ -11,5 +11,8 @@ setup(name='controller',
       author='Alejandro Carrillo',
       author_email='alex.emilio.carrillo@gmail.com',
       packages=['controller'],
-      install_requires=get_reqs()
+      install_requires=get_reqs(),
+      entry_points = {
+          'console_scripts': ['run-controller=controller.__main__:main']
+      }
      )

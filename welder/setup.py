@@ -11,5 +11,8 @@ setup(name='welder',
       author='Alejandro Carrillo',
       author_email='alex.emilio.carrillo@gmail.com',
       packages=['welder'],
-      install_requires=get_reqs()
+      install_requires=get_reqs(),
+      entry_points = {
+          'console_scripts': ['run-welder=welder.__main__:main']
+      }
      )
