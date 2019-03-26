@@ -11,5 +11,8 @@ setup(name='viewer',
       author='Alejandro Carrillo',
       author_email='alex.emilio.carrillo@gmail.com',
       packages=['viewer'],
-      install_requires=get_reqs()
+      install_requires=get_reqs(),
+      entry_points = {
+          'console_scripts': ['run-viewer=viewer.__main__:main']
+      }
      )
